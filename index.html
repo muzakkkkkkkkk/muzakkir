@@ -3,22 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Syed Muzakkir Pasha — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<title>Praneeth K // Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-base: #050505;
-    --bg-card: rgba(15, 20, 25, 0.4);
-    --neon-cyan: #00f0ff;
-    --neon-green: #00ff66;
-    --accent-purple: #8a2be2;
-    --text-main: #e2e8f0;
-    --text-muted: #8b9bb4;
-    --border-glass: rgba(255, 255, 255, 0.08);
-    --border-highlight: rgba(0, 240, 255, 0.3);
-    --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.15);
-    --radius: 12px;
-    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --bg-base: #0a0a0a;
+    --bg-surface: #141414;
+    --accent: #ccff00; /* Acid Yellow from the video */
+    --text-main: #f4f4f5;
+    --text-muted: #a1a1aa;
+    --border: rgba(255, 255, 255, 0.1);
+    --transition-slow: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.3s ease;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,577 +25,291 @@
   body {
     background-color: var(--bg-base);
     color: var(--text-main);
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
     overflow-x: hidden;
-    cursor: none;
-    -webkit-font-smoothing: antialiased;
+    cursor: none; /* Custom cursor */
   }
 
-  /* GRAIN NOISE & AMBIENT GLOW */
-  body::before {
-    content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.03), transparent 60%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.03), transparent 50%);
-    z-index: -2; pointer-events: none;
-  }
-  body::after {
-    content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-    z-index: -1; pointer-events: none; opacity: 0.6;
-  }
-
-  /* CUSTOM CURSOR */
+  /* PREMIUM CUSTOM CURSOR */
   #cursor {
-    position: fixed; width: 6px; height: 6px; background: var(--neon-cyan);
-    border-radius: 50%; pointer-events: none; z-index: 9999;
-    transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s;
+    position: fixed; top: 0; left: 0; width: 20px; height: 20px;
+    background: var(--accent); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+    mix-blend-mode: difference;
   }
-  #cursor-ring {
-    position: fixed; width: 32px; height: 32px;
-    border: 1px solid var(--border-highlight); border-radius: 50%;
-    pointer-events: none; z-index: 9998; transform: translate(-50%, -50%);
-    transition: all 0.15s ease-out; box-shadow: var(--glow-cyan);
-  }
+  body:hover #cursor { width: 20px; height: 20px; }
 
   /* TYPOGRAPHY */
-  h1, h2, h3, .font-orbitron { font-family: 'Orbitron', sans-serif; }
-  .font-mono { font-family: 'Space Mono', monospace; }
+  h1, h2, h3, .display-font { font-family: 'Syne', sans-serif; text-transform: uppercase; }
   
-  .section-label {
-    font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--neon-cyan);
-    letter-spacing: 2px; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;
-    text-transform: uppercase;
+  .marquee-container {
+    width: 100vw; overflow: hidden; white-space: nowrap;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 1rem 0; margin: 4rem 0; background: var(--bg-surface);
   }
-  .section-label::before {
-    content: ''; width: 30px; height: 1px; background: var(--neon-cyan);
+  .marquee {
+    display: inline-block; font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 4rem; color: transparent; -webkit-text-stroke: 1px var(--text-muted);
+    animation: scroll 20s linear infinite;
   }
+  .marquee span { padding: 0 2rem; color: var(--accent); -webkit-text-stroke: 0; }
+  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
   /* NAVIGATION */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
-    background: rgba(5, 5, 5, 0.6); backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border-glass);
-  }
-  .nav-logo { font-size: 1.2rem; font-weight: 900; color: #fff; letter-spacing: 2px; }
-  .nav-logo span { color: var(--neon-cyan); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--text-muted);
-    text-decoration: none; letter-spacing: 1px; transition: var(--transition);
-    position: relative; padding-bottom: 4px;
-  }
-  .nav-links a:hover, .nav-links a.active { color: #fff; }
-  .nav-links a::after {
-    content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
-    background: var(--neon-cyan); transition: var(--transition);
-  }
-  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-
-  /* BUTTONS */
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 1rem 2rem; font-family: 'Space Mono', monospace; font-size: 0.85rem;
-    letter-spacing: 1px; text-decoration: none; border-radius: 4px;
-    transition: var(--transition); cursor: none; position: relative; overflow: hidden;
-  }
-  .btn-primary {
-    background: rgba(0, 240, 255, 0.1); color: var(--neon-cyan);
-    border: 1px solid var(--neon-cyan); box-shadow: var(--glow-cyan);
-  }
-  .btn-primary:hover { background: var(--neon-cyan); color: var(--bg-base); }
-  .btn-secondary { color: #fff; border: 1px solid var(--border-glass); background: var(--bg-card); }
-  .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
-
-  /* LAYOUT & SECTIONS */
-  section { padding: 8rem 5%; position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; }
-
-  /* ==================== HERO ==================== */
-  #hero {
-    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
-    align-items: flex-start; position: relative;
-  }
-  .hero-pre { color: var(--text-muted); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
-  .hero-name {
-    font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900; line-height: 1.1;
-    color: #fff; letter-spacing: -2px; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
-  }
-  .hero-name span {
-    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .hero-title { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--text-muted); opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
-  .hero-desc {
-    max-width: 600px; margin-top: 2rem; font-size: 1.15rem; line-height: 1.7;
-    color: var(--text-muted); opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
-  }
-  .hero-cta { display: flex; gap: 1rem; margin-top: 3rem; opacity: 0; animation: fadeUp 0.8s 1s forwards; }
-  
-  /* Scroll Indicator */
-  .scroll-down {
-    position: absolute; bottom: 3rem; left: 5%; display: flex; align-items: center; gap: 1rem;
-    font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted);
-    letter-spacing: 2px; opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
-  }
-  .scroll-line { width: 40px; height: 1px; background: var(--text-muted); position: relative; overflow: hidden; }
-  .scroll-line::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-    background: var(--neon-cyan); animation: scrollLine 2s infinite ease-in-out;
-  }
-  @keyframes scrollLine { to { left: 100%; } }
-
-  /* ==================== BENTO BOX CARDS ==================== */
-  .glass-card {
-    background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-glass);
-    border-radius: var(--radius); padding: 2.5rem; transition: var(--transition);
-    position: relative; overflow: hidden;
-  }
-  .glass-card:hover { border-color: var(--border-highlight); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-  .glass-card::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); opacity: 0.5;
-  }
-
-  /* ==================== ABOUT & SKILLS ==================== */
-  #about { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-  .about-content h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
-  .about-content p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.1rem; }
-  
-  .bento-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
-  }
-  .bento-item { display: flex; flex-direction: column; justify-content: center; }
-  .bento-icon { font-size: 1.5rem; margin-bottom: 1rem; color: var(--neon-cyan); }
-  .bento-title { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem; }
-  .bento-value { font-size: 1.1rem; font-weight: 600; color: #fff; }
-
-  /* SKILLS */
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-  .skill-header { display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center; }
-  .skill-name { font-weight: 700; letter-spacing: 1px; color: #fff; }
-  .skill-percent { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--neon-cyan); }
-  .skill-track { height: 2px; background: var(--border-glass); width: 100%; position: relative; border-radius: 2px; }
-  .skill-fill {
-    position: absolute; top: -1px; left: 0; height: 4px; background: var(--neon-cyan);
-    border-radius: 2px; width: 0; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 10px var(--neon-cyan);
-  }
-
-  /* ==================== GAMING (BENTO UX) ==================== */
-  .gaming-bento {
-    display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(200px, auto); gap: 1.5rem; margin-top: 3rem;
-  }
-  .game-large { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
-  .game-tall { grid-column: span 1; grid-row: span 2; }
-  .game-title { font-size: 1.5rem; color: #fff; margin-bottom: 0.5rem; }
-  .game-meta { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--neon-green); padding: 0.4rem 0.8rem; background: rgba(0, 255, 102, 0.1); display: inline-block; border-radius: 4px; margin-bottom: 1.5rem; }
-  .stat-row { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border-glass); }
-  .stat-row:last-child { border-bottom: none; padding-bottom: 0; }
-  .stat-label { color: var(--text-muted); font-size: 0.95rem; }
-  .stat-val { font-family: 'Space Mono', monospace; color: #fff; font-weight: 700; }
-
-  /* ==================== PROJECTS ==================== */
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
-  .project-card { display: flex; flex-direction: column; justify-content: space-between; }
-  .project-top { margin-bottom: 2rem; }
-  .project-tag { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent-purple); margin-bottom: 1rem; display: block; }
-  .project-title { font-size: 1.4rem; color: #fff; margin-bottom: 1rem; }
-  .project-desc { color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
-  .project-link {
-    font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--neon-cyan);
-    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;
-  }
-  .project-link:hover { gap: 0.8rem; }
-
-  /* ==================== CONTACT ==================== */
-  #contact { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; }
-  .contact-info-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 3rem; }
-  .contact-item { display: flex; align-items: center; gap: 1.5rem; }
-  .contact-icon {
-    width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center;
-    color: var(--neon-cyan); font-size: 1.2rem; transition: var(--transition);
-  }
-  .contact-item:hover .contact-icon { background: var(--neon-cyan); color: var(--bg-base); box-shadow: var(--glow-cyan); }
-  .contact-detail p:first-child { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem; }
-  .contact-detail p:last-child { color: #fff; font-weight: 600; font-size: 1.1rem; }
-  
-  .form-group { position: relative; margin-bottom: 2.5rem; }
-  .form-input {
-    width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border-glass);
-    padding: 1rem 0; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: var(--transition);
-  }
-  .form-input:focus { border-bottom-color: var(--neon-cyan); }
-  .form-label {
-    position: absolute; top: 1rem; left: 0; color: var(--text-muted); font-family: 'Space Mono', monospace;
-    font-size: 0.85rem; pointer-events: none; transition: var(--transition);
-  }
-  .form-input:focus ~ .form-label, .form-input:valid ~ .form-label { top: -1rem; font-size: 0.75rem; color: var(--neon-cyan); }
-  textarea.form-input { resize: none; height: 80px; }
-
-  /* ==================== FOOTER ==================== */
-  footer {
+    position: fixed; top: 0; width: 100%; z-index: 100;
     padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid var(--border-glass); margin-top: 4rem;
+    mix-blend-mode: difference;
   }
-  .footer-text { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+  .nav-links { display: flex; gap: 3rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500; color: #fff; text-decoration: none;
+    text-transform: uppercase; letter-spacing: 1px; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--accent); transition: var(--transition-fast);
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO SECTION */
+  #hero {
+    height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 0 5%; position: relative;
+  }
+  .hero-title {
+    font-size: clamp(4rem, 10vw, 10rem); line-height: 0.9; font-weight: 800;
+    letter-spacing: -0.03em; margin-bottom: 2rem;
+  }
+  .hero-title span { color: var(--accent); display: block; }
+  .hero-subtitle {
+    max-width: 500px; font-size: 1.1rem; line-height: 1.6; color: var(--text-muted);
+  }
+
+  /* SECTIONS & GRIDS */
+  section { padding: 8rem 5%; }
+  .section-header { font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 4rem; }
+  
+  .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+  .card {
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 3rem; position: relative; overflow: hidden;
+    transition: var(--transition-slow);
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+  
+  /* SPECIFIC GRID PLACEMENTS */
+  .card-about { grid-column: span 8; }
+  .card-stat { grid-column: span 4; display: flex; flex-direction: column; justify-content: space-between; }
+  .card-full { grid-column: span 12; }
+  .card-half { grid-column: span 6; }
+
+  /* CARD CONTENT */
+  .tag {
+    display: inline-block; padding: 0.4rem 1rem; border-radius: 50px;
+    background: rgba(204, 255, 0, 0.1); color: var(--accent);
+    font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 2rem;
+  }
+  .card h3 { font-size: 2rem; margin-bottom: 1rem; }
+  .card p { color: var(--text-muted); line-height: 1.7; font-size: 1.05rem; }
+  .stat-number { font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800; color: var(--accent); line-height: 1; }
+
+  /* FORMS & CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .contact-info p { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-muted); }
+  .contact-info strong { color: #fff; font-weight: 500; }
+  
+  input, textarea {
+    width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border);
+    padding: 1rem 0; color: #fff; font-family: 'Inter', sans-serif; font-size: 1.1rem;
+    margin-bottom: 2rem; outline: none; transition: var(--transition-fast);
+  }
+  input:focus, textarea:focus { border-color: var(--accent); }
+  button {
+    background: var(--accent); color: var(--bg-base); font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1.2rem; border: none; padding: 1.5rem 3rem;
+    border-radius: 8px; cursor: none; transition: var(--transition-fast);
+    text-transform: uppercase; width: 100%;
+  }
+  button:hover { background: #fff; }
 
   /* ANIMATIONS */
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-  .reveal { opacity: 0; transform: translateY(40px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal { opacity: 0; transform: translateY(50px); transition: var(--transition-slow); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* RESPONSIVE */
-  @media (max-width: 992px) {
-    #about, #contact { grid-template-columns: 1fr; gap: 3rem; }
-    .gaming-bento { grid-template-columns: 1fr; }
-    .game-large, .game-tall { grid-column: span 1; grid-row: auto; }
-  }
-  @media (max-width: 768px) {
-    .nav-links { display: none; } /* Add hamburger menu for prod */
-    section { padding: 6rem 5%; }
-    .hero-name { font-size: 3.5rem; }
-    .bento-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  @media (max-width: 900px) {
+    .card-about, .card-stat, .card-half { grid-column: span 12; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
   }
 </style>
 </head>
 <body>
 
 <div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <nav>
-  <div class="nav-logo font-orbitron">MP<span>//</span></div>
+  <div class="nav-logo">PRANEETH K.</div>
   <ul class="nav-links">
-    <li><a href="#hero">00. Home</a></li>
-    <li><a href="#about">01. About</a></li>
-    <li><a href="#skills">02. Arsenal</a></li>
-    <li><a href="#gaming">03. Stats</a></li>
-    <li><a href="#projects">04. Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#academics">Academics</a></li>
+    <li><a href="#skills">Stack</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
 <section id="hero">
-  <div class="font-mono hero-pre">SYSTEM ONLINE_</div>
-  <h1 class="hero-name font-orbitron"> SYED MUZAKKIR <br><span>PASHA</span></h1>
-  <div class="hero-title font-mono" id="typewriter"></div>
-  <p class="hero-desc">B.Tech student & tech-obsessed builder from Vikharabad. Bridging the gap between raw hardware capabilities and high-performance software execution.</p>
-  
-  <div class="hero-cta">
-    <a href="#projects" class="btn btn-primary">Deploy Projects</a>
-    <a href="#contact" class="btn btn-secondary">Initialize Contact</a>
-  </div>
-
-  <div class="scroll-down">
-    <div class="scroll-line"></div>
-    <span>SCROLL</span>
-  </div>
+  <h1 class="hero-title reveal">
+    COMPUTING<br>
+    <span>REALITIES.</span>
+  </h1>
+  <p class="hero-subtitle reveal" style="transition-delay: 0.2s;">
+    B.Tech CSE Student, Digital Editor & Content Creator bridging logic with aesthetics.
+  </p>
 </section>
 
-<section id="about">
-  <div class="about-content reveal">
-    <div class="section-label">01. Origin</div>
-    <h2 class="font-orbitron">Architecting Digital Realities.</h2>
-    <p>I'm a B.Tech student who treats engineering like a high-stakes campaign. Since childhood, understanding how systems work—from silicon to screen—has been my primary objective.</p>
-    <p>Whether I'm optimizing a block of code, studying embedded systems, or completing a notorious boss fight, I apply the same relentless pattern recognition and persistence.</p>
+<div class="marquee-container reveal">
+  <div class="marquee">
+    C PROGRAMMING <span>//</span> PYTHON <span>//</span> DATA STRUCTURES <span>//</span> CINEMATIC EDITING <span>//</span> C PROGRAMMING <span>//</span> PYTHON <span>//</span> DATA STRUCTURES <span>//</span> CINEMATIC EDITING
   </div>
-  
-  <div class="bento-grid reveal">
-    <div class="glass-card bento-item">
-      <div class="bento-icon">🎓</div>
-      <div class="bento-title">EDUCATION</div>
-      <div class="bento-value">B.Tech Engineering</div>
+</div>
+
+<section id="about">
+  <h2 class="section-header reveal">SYSTEM ARCHITECTURE</h2>
+  <div class="bento-grid">
+    <div class="card card-about reveal">
+      <div class="tag">Profile</div>
+      <h3>The Logic & The Lens</h3>
+      <p>I am currently navigating my first year in Computer Science and Engineering (CSE). My approach to technology is multidisciplinary. When I'm not writing C or Python logic, I'm highly focused on digital photography and high-contrast, cinematic image editing. I believe the best engineers understand both structural logic and visual impact.</p>
     </div>
-    <div class="glass-card bento-item">
-      <div class="bento-icon">📍</div>
-      <div class="bento-title">BASE OF OPS</div>
-      <div class="bento-value">Vikharabad, IN</div>
+    
+    <div class="card card-stat reveal" style="transition-delay: 0.1s;">
+      <div class="tag">Academics</div>
+      <div class="stat-number">80%</div>
+      <p>Sri Chaitanya Jr College<br>(2022-2024 Distinction)</p>
     </div>
-    <div class="glass-card bento-item" style="grid-column: span 2;">
-      <div class="bento-icon">⚔️</div>
-      <div class="bento-title">MINDSET</div>
-      <div class="bento-value">100% Completionist. Hesitation is Defeat.</div>
+
+    <div class="card card-half reveal">
+      <div class="tag">Content Creation</div>
+      <h3>Visual Target</h3>
+      <p>Building a digital presence requires the same persistence as debugging code. My current targets include scaling my Instagram platform (@calmunderchoas76) to 100K+ followers and securing a YouTube Silver Play Button.</p>
+    </div>
+
+    <div class="card card-half reveal" style="transition-delay: 0.1s;">
+      <div class="tag">Off-Screen</div>
+      <h3>High Octane</h3>
+      <p>Outside of the IDE, I am an avid motorcycle enthusiast with a growing personal collection. When I'm gaming, I bring strategic focus to competitive environments in titles like Free Fire.</p>
     </div>
   </div>
 </section>
 
 <section id="skills">
-  <div class="reveal">
-    <div class="section-label">02. Technical Arsenal</div>
-    <h2 class="font-orbitron" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 2rem;">Core Competencies</h2>
-  </div>
-  
-  <div class="skills-grid">
-    <div class="glass-card reveal">
-      <div class="skill-header">
-        <span class="skill-name">Software Development</span>
-        <span class="skill-percent">85%</span>
-      </div>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Algorithms, Architecture, Clean Code</p>
-      <div class="skill-track"><div class="skill-fill" data-width="85"></div></div>
-    </div>
-    <div class="glass-card reveal">
-      <div class="skill-header">
-        <span class="skill-name">Hardware & Systems</span>
-        <span class="skill-percent">80%</span>
-      </div>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Circuits, Embedded, Architecture</p>
-      <div class="skill-track"><div class="skill-fill" data-width="80"></div></div>
-    </div>
-    <div class="glass-card reveal">
-      <div class="skill-header">
-        <span class="skill-name">Web Technologies</span>
-        <span class="skill-percent">75%</span>
-      </div>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Modern UI/UX, JS, Frontend Frameworks</p>
-      <div class="skill-track"><div class="skill-fill" data-width="75"></div></div>
-    </div>
-    <div class="glass-card reveal">
-      <div class="skill-header">
-        <span class="skill-name">Problem Execution</span>
-        <span class="skill-percent">MAX</span>
-      </div>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Pattern Recognition, Debugging</p>
-      <div class="skill-track"><div class="skill-fill" data-width="100"></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="gaming">
-  <div class="reveal">
-    <div class="section-label">03. Player Profile</div>
-    <h2 class="font-orbitron" style="font-size: clamp(2rem, 4vw, 3rem);">Trophy Room</h2>
-  </div>
-
-  <div class="gaming-bento reveal">
-    <div class="glass-card game-large">
+  <h2 class="section-header reveal">TECHNICAL ARSENAL</h2>
+  <div class="bento-grid">
+    <div class="card card-full reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
       <div>
-        <h3 class="game-title font-orbitron">Grand Theft Auto V</h3>
-        <span class="game-meta">100% COMPLETION RUNS</span>
-        <div class="stat-row">
-          <span class="stat-label">Playthroughs</span>
-          <span class="stat-val">4x</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Mastery Tier</span>
-          <span class="stat-val" style="color: var(--neon-cyan)">Legendary</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Attributes Honed</span>
-          <span class="stat-val">Strategy & Endurance</span>
-        </div>
+        <h3 style="font-size: 1.5rem; color: var(--accent);">01. Core Languages</h3>
+        <p style="color: #fff; font-weight: 500; font-size: 1.2rem;">C Programming<br>Python</p>
       </div>
-    </div>
-    
-    <div class="glass-card game-tall">
-      <h3 class="game-title font-orbitron">Sekiro</h3>
-      <span class="game-meta" style="color: #ff3366; background: rgba(255, 51, 102, 0.1);">SHADOWS DIE TWICE</span>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0 2rem; line-height: 1.6;">
-        "Hesitation is defeat." The game that forged my approach to handling immense difficulty walls.
-      </p>
-      <div class="stat-row">
-        <span class="stat-label">Completion</span>
-        <span class="stat-val">100%</span>
+      <div>
+        <h3 style="font-size: 1.5rem; color: var(--accent);">02. Architecture</h3>
+        <p style="color: #fff; font-weight: 500; font-size: 1.2rem;">Data Structures<br>Algorithm Design</p>
       </div>
-      <div class="stat-row">
-        <span class="stat-label">Runs</span>
-        <span class="stat-val">2x</span>
+      <div>
+        <h3 style="font-size: 1.5rem; color: var(--accent);">03. Visuals</h3>
+        <p style="color: #fff; font-weight: 500; font-size: 1.2rem;">Advanced Photo Editing<br>Cinematic Color Grading</p>
       </div>
-      <div class="stat-row">
-        <span class="stat-label">Skill</span>
-        <span class="stat-val">Precision</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="reveal">
-    <div class="section-label">04. Build Log</div>
-    <h2 class="font-orbitron" style="font-size: clamp(2rem, 4vw, 3rem);">Recent Deployments</h2>
-  </div>
-
-  <div class="projects-grid">
-    <div class="glass-card project-card reveal">
-      <div class="project-top">
-        <span class="project-tag">UI/UX & FRONTEND</span>
-        <h3 class="project-title font-orbitron">V2 Portfolio Iteration</h3>
-        <p class="project-desc">A from-scratch digital identity utilizing modern Glassmorphism, CSS Grid Bento Boxes, and vanilla JS physics for fluid interaction without heavy libraries.</p>
-      </div>
-      <a href="#" class="project-link">VIEW SOURCE →</a>
-    </div>
-    <div class="glass-card project-card reveal">
-      <div class="project-top">
-        <span class="project-tag">SYSTEMS ENGINEERING</span>
-        <h3 class="project-title font-orbitron">Project Alpha [Loading...]</h3>
-        <p class="project-desc">Currently conceptualizing an application bridging low-level hardware constraints with high-level software interfaces. Details encrypted until launch.</p>
-      </div>
-      <a href="#" class="project-link" style="color: var(--text-muted); pointer-events: none;">IN DEVELOPMENT</a>
     </div>
   </div>
 </section>
 
 <section id="contact">
-  <div class="reveal">
-    <div class="section-label">05. Comms</div>
-    <h2 class="font-orbitron" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 2rem;">Initialize Handshake</h2>
+  <h2 class="section-header reveal">INITIALIZE CONTACT</h2>
+  <div class="contact-grid">
+    <div class="reveal">
+      <form>
+        <input type="text" placeholder="Your Designation / Name" required>
+        <input type="email" placeholder="Secure Comm Channel (Email)" required>
+        <textarea placeholder="Data Payload (Message)" rows="4" required></textarea>
+        <button type="button">Transmit Signal</button>
+      </form>
+    </div>
     
-    <form style="margin-top: 3rem;">
-      <div class="form-group">
-        <input type="text" class="form-input" required>
-        <label class="form-label">IDENTIFIER (NAME)</label>
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-input" required>
-        <label class="form-label">SECURE ROUTE (EMAIL)</label>
-      </div>
-      <div class="form-group">
-        <textarea class="form-input" required></textarea>
-        <label class="form-label">PAYLOAD (MESSAGE)</label>
-      </div>
-      <button class="btn btn-primary" type="button" style="width: 100%;">TRANSMIT DATA</button>
-    </form>
-  </div>
-
-  <div class="contact-info-list reveal" style="transition-delay: 0.2s;">
-    <div class="glass-card" style="padding: 2rem;">
-      <p style="color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6;">Whether you're discussing a dev role, hardware modding, or sharing strat for a tough game boss—my comms are open.</p>
-      
-      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <a href="mailto:syedmuzakkirpasha@email.com" style="text-decoration: none;">
-          <div class="contact-item">
-            <div class="contact-icon">@</div>
-            <div class="contact-detail">
-              <p>EMAIL DIRECTORY</p>
-              <p>syedmuzakkirpasha@email.com</p>
-            </div>
-          </div>
-        </a>
-        <a href="#" style="text-decoration: none;">
-          <div class="contact-item">
-            <div class="contact-icon">{" "}</div>
-            <div class="contact-detail">
-              <p>GITHUB REPO</p>
-              <p>github.com/muzakkkkkkkkk</p>
-            </div>
-          </div>
-        </a>
+    <div class="card reveal" style="transition-delay: 0.2s;">
+      <div class="tag">Coordinates</div>
+      <div class="contact-info" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+          <p>Email Route</p>
+          <strong>K.praneeth2005@gmail.com</strong>
+        </div>
+        <div>
+          <p>Direct Line</p>
+          <strong>9030975026</strong>
+        </div>
+        <div>
+          <p>Base of Operations</p>
+          <strong>H.no 1-36/1/2/5/1<br>Jawahar Colony, Lingampally<br>Rangareddy Dist.</strong>
+        </div>
+        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+          <p>Social Presence</p>
+          <strong>IG: @calmunderchoas76</strong>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="footer-text">© 2025 SYED MUZAKkIR PASHA // BUILT IN VIKHARABAD</div>
-  <div class="footer-text" style="display: flex; align-items: center; gap: 0.5rem;">
-    <span style="display: inline-block; width: 8px; height: 8px; background: var(--neon-green); border-radius: 50%; box-shadow: 0 0 10px var(--neon-green);"></span>
-    SYSTEMS NOMINAL. READY FOR OPS.
-  </div>
-</footer>
-
 <script>
-  // Smoother Custom Cursor
+  // Premium Custom Cursor Logic
   const cursor = document.getElementById('cursor');
-  const cursorRing = document.getElementById('cursor-ring');
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
 
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX; mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
   });
 
-  function renderCursor() {
-    ringX += (mouseX - ringX) * 0.15; // Smooth easing
-    ringY += (mouseY - ringY) * 0.15;
-    cursorRing.style.left = ringX + 'px'; cursorRing.style.top = ringY + 'px';
-    requestAnimationFrame(renderCursor);
+  // Smooth easing for cursor
+  function animateCursor() {
+    let distX = mouseX - cursorX;
+    let distY = mouseY - cursorY;
+    cursorX += distX * 0.2;
+    cursorY += distY * 0.2;
+    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+    requestAnimationFrame(animateCursor);
   }
-  renderCursor();
+  animateCursor();
 
-  // Hover states for cursor
-  document.querySelectorAll('a, button, input, textarea, .glass-card').forEach(el => {
+  // Cursor scaling on interactive elements
+  const interactables = document.querySelectorAll('a, button, input, textarea, .card');
+  interactables.forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursorRing.style.transform = 'translate(-50%,-50%) scale(1.5)';
-      cursor.style.transform = 'translate(-50%,-50%) scale(0.5)';
+      cursor.style.width = '60px';
+      cursor.style.height = '60px';
+      cursor.style.background = '#fff';
     });
     el.addEventListener('mouseleave', () => {
-      cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
-      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      cursor.style.background = 'var(--accent)';
     });
   });
 
-  // Typewriter Effect
-  const titles = ['Hardware Enthusiast.', 'Software Developer.', 'System Optimizer.'];
-  let titleIndex = 0, charIndex = 0, isDeleting = false;
-  const typewriterElement = document.getElementById('typewriter');
-
-  function type() {
-    const currentTitle = titles[titleIndex];
-    if (isDeleting) {
-      typewriterElement.textContent = '> ' + currentTitle.substring(0, charIndex - 1);
-      charIndex--;
-    } else {
-      typewriterElement.textContent = '> ' + currentTitle.substring(0, charIndex + 1);
-      charIndex++;
-    }
-
-    let typeSpeed = isDeleting ? 40 : 80;
-
-    if (!isDeleting && charIndex === currentTitle.length) {
-      typeSpeed = 2000; // Pause at end
-      isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      titleIndex = (titleIndex + 1) % titles.length;
-      typeSpeed = 500; // Pause before new word
-    }
-
-    setTimeout(type, typeSpeed);
-  }
-  setTimeout(type, 1500);
-
-  // Scroll Reveal & Skill Bars Animation
-  const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+  // Scroll Reveal Animations
+  const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -100px 0px" };
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        
-        // Trigger skill bars if they exist in the target
-        const skillFills = entry.target.querySelectorAll('.skill-fill');
-        skillFills.forEach(bar => {
-          setTimeout(() => { bar.style.width = bar.getAttribute('data-width') + '%'; }, 300);
-        });
-        
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Navigation Active State highlighting
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (scrollY >= sectionTop - 250) {
-        current = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
-      }
-    });
-  });
 </script>
 </body>
 </html>
